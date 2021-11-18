@@ -17,9 +17,34 @@ public class PlayerController : MonoBehaviour
     bool isGrounded;
     Vector3 velocity;
 
+    [SerializeField] private Animator _punch = null;
+    [SerializeField] private Animator _kick = null;
+
+
+    //Dodging variables
+    public float DelayBeforeInvinsible = 0.2f;
+    public float InvinsibleDuration = 0.5f;
+
+    public float DodgeCoolDown = 1;
+    private float ActCoolDown;
+
+    public float PushAmt = 3;
+
     // Update is called once per frame
     void Update()
     {
+        bool Roll = Input.GetKeyDown(KeyCode.LeftShift);
+        if(ActCoolDown <= 0)
+        {
+            if (Roll)
+            {
+                Dodge();
+            }
+        }
+        else
+        {
+            ActCoolDown -= Time.deltaTime;
+        }
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
         if (isGrounded && velocity.y < 0)
         {
@@ -52,10 +77,32 @@ public class PlayerController : MonoBehaviour
         {
             Dodge();
         }
+
+        Attacks();
     }
 
     void Dodge()
     {
         Debug.Log("DODGED");
+        ActCoolDown = DodgeCoolDown;
+        controller.Move(velocity * Time.deltaTime*PushAmt);
+
+    }
+
+    void Attacks()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Debug.Log("Punch");
+            if (isActiveAndEnabled)
+            {
+                _punch.Play("Punching", 0, 0.0f);
+            }
+        }
+        if (Input.GetButtonDown("Fire2"))
+        {
+            Debug.Log("Kick");
+            _kick.Play("Kicking", 0, 0.0f);
+        }
     }
 }

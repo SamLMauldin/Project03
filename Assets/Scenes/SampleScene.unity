@@ -268,7 +268,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7773019, y: 1}
+    m_SensorSize: {x: 1.7789047, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -467,7 +467,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7773019, y: 1}
+    m_SensorSize: {x: 1.7789047, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -483,7 +483,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 799235011}
-  m_LocalRotation: {x: 0.3826835, y: 0.00000027151506, z: -0.000000112465216, w: 0.92387956}
+  m_LocalRotation: {x: 0.3826835, y: 0.0000003033083, z: -0.00000012563443, w: 0.92387956}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -502,6 +502,7 @@ GameObject:
   - component: {fileID: 862086033}
   - component: {fileID: 862086032}
   - component: {fileID: 862086034}
+  - component: {fileID: 862086035}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -531,6 +532,12 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 256
+  _punch: {fileID: 5866666021909216657, guid: 0bdec2c61edcf8f4b9d1d161fd966d70, type: 3}
+  _kick: {fileID: 5866666021909216657, guid: b9c091b2149694f46bdeac8bffdff25e, type: 3}
+  DelayBeforeInvinsible: 0.2
+  InvinsibleDuration: 0.5
+  DodgeCoolDown: 1
+  PushAmt: 3
 --- !u!4 &862086033
 Transform:
   m_ObjectHideFlags: 0
@@ -565,6 +572,25 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!95 &862086035
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862086031}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 4c654a99efb15344e8ba6f3d98fa2a14, type: 3}
+  m_Controller: {fileID: 9100000, guid: 4af4739059f6736468a54f606ecd9cc6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -730,7 +756,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7773019, y: 1}
+    m_SensorSize: {x: 1.7789047, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -1266,6 +1292,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: xbot
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 4c654a99efb15344e8ba6f3d98fa2a14,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 4af4739059f6736468a54f606ecd9cc6, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c654a99efb15344e8ba6f3d98fa2a14, type: 3}
 --- !u!4 &1513461284 stripped
@@ -1388,7 +1419,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7773019, y: 1}
+    m_SensorSize: {x: 1.7789047, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
