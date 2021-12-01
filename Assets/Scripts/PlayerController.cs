@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     float _turnSmoothVelocity;
     [SerializeField] float gravity = -9.81f;
     [SerializeField] float jumpHeight = 3f;
+    [SerializeField] Collider _dodgeCollider;
 
     public Transform groundCheck;
     public float groundDistance = 0.4f;
@@ -83,7 +84,9 @@ public class PlayerController : MonoBehaviour
 
     void Dodge()
     {
+        _dodgeCollider.transform.position = controller.transform.position;
         Debug.Log("DODGED");
+        Vector3 WTPosition = controller.transform.position;
         ActCoolDown = DodgeCoolDown;
         controller.Move(velocity * Time.deltaTime*PushAmt);
 
