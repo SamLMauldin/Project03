@@ -99,7 +99,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Punch");
             if (isActiveAndEnabled)
             {
-                _punch.Play("Punching", 0, 0.0f);
+                _punch.SetBool("Punching", Input.GetKey(KeyCode.W));
             }
         }
         if (Input.GetButtonDown("Fire2"))
