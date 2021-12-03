@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         anim = GetComponent<Animator>();
+        _dodgeCollider.enabled = false;
     }
 
     // Update is called once per frame
@@ -67,6 +68,7 @@ public class PlayerController : MonoBehaviour
 
             Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * _speed * Time.deltaTime);
+            anim.SetTrigger("WalkingForward");
         }
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
@@ -77,7 +79,7 @@ public class PlayerController : MonoBehaviour
 
         controller.Move(velocity * Time.deltaTime);
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             Dodge();
         }
@@ -87,12 +89,13 @@ public class PlayerController : MonoBehaviour
 
     void Dodge()
     {
+        _dodgeCollider.enabled = true;
         _dodgeCollider.transform.position = controller.transform.position;
         Debug.Log("DODGED");
         Vector3 WTPosition = controller.transform.position;
         ActCoolDown = DodgeCoolDown;
         controller.Move(velocity * Time.deltaTime*PushAmt);
-
+        anim.SetTrigger("Dodging");
     }
 
     void Attacks()
