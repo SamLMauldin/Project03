@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float gravity = -9.81f;
     [SerializeField] float jumpHeight = 3f;
     [SerializeField] Collider _dodgeCollider;
+    [SerializeField] GameObject _dodgeColliderReturn;
 
     public Transform groundCheck;
     public float groundDistance = 0.4f;
@@ -29,10 +30,20 @@ public class PlayerController : MonoBehaviour
 
     Animator anim;
 
+    AudioSource audioSource;
+    public AudioClip hit;
+
+    [SerializeField] Collider enemyCollider;
+    [SerializeField] Collider playerFist;
+    public static bool enemyHit = false;
+
     private void Start()
     {
         anim = GetComponent<Animator>();
+        _dodgeCollider.transform.position = _dodgeColliderReturn.transform.position;
         _dodgeCollider.enabled = false;
+        audioSource = GetComponent<AudioSource>();
+        playerFist.enabled = false;
     }
 
     // Update is called once per frame
@@ -85,6 +96,12 @@ public class PlayerController : MonoBehaviour
         }
 
         Attacks();
+
+        if (Enemy.playerHit)
+        {
+            anim.SetTrigger("Hit");
+            Enemy.playerHit = false;
+        }
     }
 
     void Dodge()
@@ -96,19 +113,47 @@ public class PlayerController : MonoBehaviour
         ActCoolDown = DodgeCoolDown;
         controller.Move(velocity * Time.deltaTime*PushAmt);
         anim.SetTrigger("Dodging");
+
+        StartCoroutine(DodgeReset());
     }
 
     void Attacks()
     {
+        playerFist.enabled = true;
         if (Input.GetButtonDown("Fire1"))
         {
             Debug.Log("Punch");
             anim.SetTrigger("Punching");
+            audioSource.PlayOneShot(hit);
+            if (Vector3.Distance(enemyCollider.transform.position, playerFist.transform.position) < 1.5f)
+            {
+                enemyHit = true;
+            }
+            StartCoroutine(Hit());
+
         }
         if (Input.GetButtonDown("Fire2"))
         {
             Debug.Log("Kick");
             anim.SetTrigger("Kicking");
+            audioSource.PlayOneShot(hit);
+            if (Vector3.Distance(enemyCollider.transform.position, playerFist.transform.position) < 1.5f)
+            {
+                enemyHit = true;
+            }
+            StartCoroutine(Hit());
         }
+    }
+
+    private IEnumerator DodgeReset()
+    {
+        yield return new WaitForSeconds(1);
+        _dodgeCollider.transform.position = _dodgeColliderReturn.transform.position;
+        _dodgeCollider.enabled = false;
+    }
+    private IEnumerator Hit()
+    {
+        yield return new WaitForSeconds(2);
+        playerFist.enabled = false;
     }
 }
